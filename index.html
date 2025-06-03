@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carnes Asadas - Cooperación</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 30px;
+    }
+    h1, h2 {
+      color: #9b2347;
+    }
+    .evento-info, .equipo {
+      background: #fff;
+      border-left: 5px solid #9b2347;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+    }
+    .persona {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    .pagado {
+      color: green;
+      font-weight: bold;
+    }
+    .debe {
+      color: red;
+      font-weight: bold;
+    }
+    .resumen {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="mb-4">Carnes Asadas</h1>
+
+  <div class="evento-info">
+    <div class="mb-4">
+      <label class="fw-bold mb-2 text-dark">Ubicación: Casa de Emmanuel</label>
+      <div class="card shadow-sm border-0 overflow-hidden rounded-3">
+        <div class="ratio ratio-16x9">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1202.907045294382!2d-92.89937588284111!3d18.01907268702717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85edd9204f539229%3A0xeeddeb1c3b4de20c!2sPanader%C3%ADa%20DIANA!5e0!3m2!1ses!2smx!4v1748994220305!5m2!1ses!2smx"
+            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div class="card-body text-center">
+          <a href="https://maps.google.com/?q=Panadería DIANA, Villahermosa" target="_blank" class="btn btn-sm btn-outline-primary">
+            Ver en Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p><strong>Hora de llegada:</strong> De 12 a 2 PM</p>
+    <p><strong>Día:</strong> 04 de junio de 2025</p>
+    <p><strong>Cooperación:</strong> $300 por persona</p>
+    <p class="resumen"><strong>Total Recaudado:</strong> $<span id="recaudado">0</span></p>
+    <p class="resumen"><strong>Faltante:</strong> $<span id="faltante">0</span></p>
+  </div>
+
+  <div id="contenedor-personas"></div>
+
+  <script>
+    const personas = [
+      { grupo: "Asesor" },
+      { nombre: "Jonathan de la Cruz Álvarez", pagado: false },
+
+      { grupo: "HackGuar" },
+      { nombre: "Herman Enrique Primo Escobar", pagado: true },
+      { nombre: "Luis Mario Melchor Flores", pagado: true },
+      { nombre: "Isai Elias Cordova de la Cruz", pagado: false },
+      { nombre: "Dariana Guervara de los Santos", pagado: false },
+      { nombre: "Amira Herrera Ojeda", pagado: true },
+
+      { grupo: "HackCotea" },
+      { nombre: "Iván Cordova Álvarez", pagado: false },
+      { nombre: "Cesar Arturo Martínez García", pagado: false },
+      { nombre: "Ricardo González Ramos", pagado: false },
+      { nombre: "Emmanuel Urbano Santos Cano", pagado: false },
+      { nombre: "Valery Abril Velázquez del Rivero", pagado: false },
+
+      { grupo: "Olmeck" },
+      { nombre: "Ángel Josué Olan Martínez", pagado: false },
+      { nombre: "María Jose Ordóñez Rodríguez", pagado: false },
+      { nombre: "Christian Fernando de la Cruz Méndez", pagado: false },
+      { nombre: "Néstor Gilberto Vázquez Vera", pagado: true },
+      { nombre: "Gabriela Martínez García", pagado: true },
+
+      { grupo: "HackBalam" },
+      { nombre: "Jhovany Moisés López Gómez", pagado: false },
+      { nombre: "Jesus Manuel Alcazar Perez", pagado: false },
+      { nombre: "Jose Alberto Arechederra Mejía", pagado: false },
+      { nombre: "Dessirey Sánchez de los Santos", pagado: false },
+      { nombre: "Ricardo Ramos Rios", pagado: false },
+
+      { grupo: "Colados" },
+      { nombre: "Josué Segura Milla", pagado: true },
+      { nombre: "Danylleimi García López", pagado: true },
+    ];
+
+    const contenedor = document.getElementById("contenedor-personas");
+
+    function render() {
+      contenedor.innerHTML = "";
+      let recaudado = 0;
+      const total = personas.filter(p => p.nombre).length * 300;
+
+      let grupoActual = null;
+      let divGrupo = null;
+
+      personas.forEach(p => {
+        if (p.grupo) {
+          grupoActual = document.createElement("div");
+          grupoActual.className = "equipo";
+          const h2 = document.createElement("h2");
+          h2.textContent = "Equipo " + p.grupo;
+          grupoActual.appendChild(h2);
+          divGrupo = document.createElement("div");
+          grupoActual.appendChild(divGrupo);
+          contenedor.appendChild(grupoActual);
+        } else {
+          const row = document.createElement("div");
+          row.className = "row persona";
+          row.onclick = () => {
+            p.pagado = !p.pagado;
+            render();
+          };
+
+          const colNombre = document.createElement("div");
+          colNombre.className = "col-6";
+          colNombre.textContent = p.nombre;
+
+          const colEstado = document.createElement("div");
+          colEstado.className = "col-6 text-end";
+          const span = document.createElement("span");
+          span.className = p.pagado ? "pagado" : "debe";
+          span.textContent = p.pagado ? "Pagado" : "Debe";
+          colEstado.appendChild(span);
+
+          row.appendChild(colNombre);
+          row.appendChild(colEstado);
+          divGrupo.appendChild(row);
+
+          if (p.pagado) recaudado += 300;
+        }
+      });
+
+      document.getElementById("recaudado").textContent = recaudado;
+      document.getElementById("faltante").textContent = total - recaudado;
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
