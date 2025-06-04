@@ -262,7 +262,11 @@
     });
 
     // Descargar el archivo
-    doc.save("ficha_pago_oxxo.pdf");
+    const pdfBlob = doc.output("blob");
+    const pdfURL = URL.createObjectURL(pdfBlob);
+    window.open(pdfURL, "_blank"); // se abre
+    doc.save("ficha_pago_oxxo.pdf"); // y también se descarga
+
   }
 </script>
 
