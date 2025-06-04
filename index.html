@@ -831,11 +831,150 @@
         font-size: 0.9rem;
       }
       
-      @keyframes wobble-mobile {
-        0%, 100% { transform: rotate(-1deg); }
-        25% { transform: rotate(1deg); }
-        50% { transform: rotate(-1deg); }
-        75% { transform: rotate(1deg); }
+      /* Estilos mejorados para el escáner QR */
+      .scanner-modal {
+        background: rgba(0, 0, 0, 0.95);
+      }
+      
+      .scanner-container {
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        margin: 0 auto;
+      }
+      
+      .scanner-header {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      
+      .scanner-header h3 {
+        color: white;
+        font-size: 1.6rem;
+        margin-bottom: 5px;
+      }
+      
+      .scanner-header p {
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 0;
+      }
+      
+      .scanner-preview {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+        max-height: 80vh;
+        max-width: 80vh;
+        margin: 0 auto;
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2), 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+      
+      /* Marcadores de esquina para el área de escaneo */
+      .scanner-preview::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 250px;
+        height: 250px;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+        pointer-events: none;
+      }
+      
+      /* Esquinas para el área de escaneo */
+      .scanner-preview::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 260px;
+        height: 260px;
+        background: transparent;
+        z-index: 11;
+        pointer-events: none;
+        background-image: 
+          linear-gradient(to right, #ff6b6b 12px, transparent 12px),
+          linear-gradient(to bottom, #ff6b6b 12px, transparent 12px),
+          linear-gradient(to left, #ff6b6b 12px, transparent 12px),
+          linear-gradient(to top, #ff6b6b 12px, transparent 12px);
+        background-position: 
+          top left, top right,
+          bottom right, bottom left;
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+      }
+      
+      .scanner-result {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+      
+      .scanner-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .scanner-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+      
+      /* Ajustes específicos para HTML5QrScanner */
+      #qrReader {
+        width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      
+      #qrReader video {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 10px;
+      }
+      
+      #qrReader__scan_region {
+        padding: 0 !important;
+      }
+      
+      #qrReader__scan_region img {
+        display: none !important;
+      }
+      
+      #qrReader__dashboard {
+        padding: 10px !important;
+      }
+      
+      #qrReader__dashboard_section_csr button {
+        padding: 8px 16px;
+        background: #9b2347;
+        border: none;
+        border-radius: 30px;
+        color: white;
+        cursor: pointer;
       }
     }
     
@@ -924,60 +1063,23 @@
     }
     
     .qr-code {
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       margin: 15px auto;
       background: white;
       position: relative;
-      border: 10px solid white;
+      padding: 10px;
+      border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
-    .qr-grid {
-      display: grid;
-      grid-template-columns: repeat(21, 1fr);
-      grid-template-rows: repeat(21, 1fr);
-      width: 100%;
-      height: 100%;
-    }
-    
-    .qr-cell {
-      width: 100%;
-      height: 100%;
-    }
-    
-    .qr-cell-black {
-      background-color: black;
-    }
-    
-    .qr-cell-white {
-      background-color: white;
-    }
-    
-    .qr-corner {
-      position: absolute;
-      width: 30%;
-      height: 30%;
-      background: black;
-      border: 6px solid white;
-    }
-    
-    .qr-corner-tl {
-      top: 5%;
-      left: 5%;
-      border-radius: 2px;
-    }
-    
-    .qr-corner-tr {
-      top: 5%;
-      right: 5%;
-      border-radius: 2px;
-    }
-    
-    .qr-corner-bl {
-      bottom: 5%;
-      left: 5%;
-      border-radius: 2px;
+    .qr-code canvas {
+      width: 200px;
+      height: 200px;
+      display: block;
     }
     
     .qr-name {
@@ -1027,6 +1129,263 @@
       font-size: 0.9rem;
       color: #666;
     }
+    
+    /* Estilos para el escáner QR */
+    .scan-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #9b2347, #ff6b6b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: none;
+    }
+    
+    .scan-button:hover {
+      transform: scale(1.1);
+    }
+    
+    .scan-button i {
+      color: white;
+      font-size: 1.5rem;
+    }
+    
+    .password-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .password-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .password-container {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    .scanner-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .scanner-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .scanner-container {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+    
+    .scanner-header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    .scanner-header h3 {
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 5px;
+    }
+    
+    .scanner-header p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0;
+    }
+    
+    .scanner-preview {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      max-height: 80vh;
+      max-width: 80vh;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2), 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Marcadores de esquina para el área de escaneo */
+    .scanner-preview::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 250px;
+      height: 250px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      pointer-events: none;
+    }
+    
+    /* Esquinas para el área de escaneo */
+    .scanner-preview::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px;
+      height: 260px;
+      background: transparent;
+      z-index: 11;
+      pointer-events: none;
+      background-image: 
+        linear-gradient(to right, #ff6b6b 12px, transparent 12px),
+        linear-gradient(to bottom, #ff6b6b 12px, transparent 12px),
+        linear-gradient(to left, #ff6b6b 12px, transparent 12px),
+        linear-gradient(to top, #ff6b6b 12px, transparent 12px);
+      background-position: 
+        top left, top right,
+        bottom right, bottom left;
+      background-size: 40px 40px;
+      background-repeat: no-repeat;
+    }
+    
+    .scanner-result {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .scanner-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .scanner-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+    
+    /* Ajustes específicos para HTML5QrScanner */
+    #qrReader {
+      width: 100% !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    
+    #qrReader video {
+      width: 100% !important;
+      height: auto !important;
+      border-radius: 10px;
+    }
+    
+    #qrReader__scan_region {
+      padding: 0 !important;
+    }
+    
+    #qrReader__scan_region img {
+      display: none !important;
+    }
+    
+    #qrReader__dashboard {
+      padding: 10px !important;
+    }
+    
+    #qrReader__dashboard_section_csr button {
+      padding: 8px 16px;
+      background: #9b2347;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+    }
+    
+    @media (max-width: 576px) {
+      .scanner-preview::before {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .scanner-preview::after {
+        width: 210px;
+        height: 210px;
+      }
+      
+      .scanner-header h3 {
+        font-size: 1.4rem;
+      }
+      
+      .scanner-container {
+        padding: 15px;
+      }
+      
+      .scanner-result {
+        padding: 15px;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .scanner-preview::before {
+        width: 180px;
+        height: 180px;
+      }
+      
+      .scanner-preview::after {
+        width: 190px;
+        height: 190px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1067,8 +1426,6 @@
       <button onclick="generarFichaOxxo()" class="btn btn-oxxo me-2">
         <i class="fas fa-barcode me-2"></i> Generar ficha de pago OXXO
       </button>
-    </br>
-    </br>
       <button id="openCreditCard" class="btn btn-primary">
         <i class="far fa-credit-card me-2"></i> Pagar con Tarjeta
       </button>
@@ -1111,7 +1468,7 @@
       { nombre: "Iván Cordova Álvarez", pagado: false },
       { nombre: "Cesar Arturo Martínez García", pagado: false },
       { nombre: "Ricardo González Ramos", pagado: true },
-      { nombre: "Emmanuel Urbano Santos Cano", pagado: true },
+      { nombre: "Emmanuel Urbano Santos Cano", pagado: false },
       { nombre: "Valery Abril Velázquez del Rivero", pagado: false },
 
       { grupo: "Olmeck" },
@@ -1298,6 +1655,10 @@
   <div class="bbq-background" id="bbqBackground"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.9.3/tsparticles.confetti.bundle.min.js"></script>
+  <!-- Biblioteca para códigos QR reales -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <!-- Biblioteca para escaneo de QR -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script>
     // Modo oscuro
     const themeToggle = document.getElementById('themeToggle');
@@ -1605,10 +1966,7 @@
       <div class="qr-name" id="qrName">Nombre de la Persona</div>
       <div class="qr-status" id="qrStatus">Estado</div>
       <div class="qr-code">
-        <div class="qr-grid" id="qrGrid"></div>
-        <div class="qr-corner qr-corner-tl"></div>
-        <div class="qr-corner qr-corner-tr"></div>
-        <div class="qr-corner qr-corner-bl"></div>
+        <canvas id="qrCanvas"></canvas>
       </div>
       <div class="qr-info">
         <p>Muestra este código en la entrada del evento</p>
@@ -1617,63 +1975,90 @@
     </div>
   </div>
   
+  <!-- Botón para escanear QR -->
+  <button class="scan-button" id="scanButton">
+    <i class="fas fa-camera"></i>
+  </button>
+  
+  <!-- Modal de Password -->
+  <div class="password-modal" id="passwordModal">
+    <div class="password-container">
+      <h4 class="mb-3">Ingresa la contraseña</h4>
+      <div class="mb-3">
+        <label class="form-label">Contraseña de verificador</label>
+        <input type="password" class="form-control" id="scanPassword" placeholder="Ingresa la contraseña">
+      </div>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" id="cancelPassword">Cancelar</button>
+        <button class="btn btn-primary" id="verifyPassword">Verificar</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de Escáner QR -->
+  <div class="scanner-modal" id="scannerModal">
+    <button class="scanner-close" id="closeScanner">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="scanner-container">
+      <div class="scanner-header">
+        <h3>Escanea el código QR</h3>
+        <p>Coloca el código QR dentro del área de escaneo</p>
+      </div>
+      <div class="scanner-preview" id="qrReader"></div>
+      <div class="scanner-result" id="scanResult">
+        <div class="result-name mb-2 fw-bold">Nombre: <span id="resultName"></span></div>
+        <div class="result-status mb-2">Estado: <span id="resultStatus"></span></div>
+        <div class="result-date mb-2">Fecha generación: <span id="resultDate"></span></div>
+        <div class="result-validation mt-3 text-center"></div>
+      </div>
+    </div>
+  </div>
+  
   <script>
-    // Función para mostrar el QR Code simulado
+    // Función para mostrar el QR Code real
     function mostrarQR(nombre, pagado) {
       const modal = document.getElementById('qrModal');
       const nombreElem = document.getElementById('qrName');
       const statusElem = document.getElementById('qrStatus');
-      const qrGrid = document.getElementById('qrGrid');
+      const canvas = document.getElementById('qrCanvas');
       
       // Establecer nombre y estado
       nombreElem.textContent = nombre;
       statusElem.textContent = pagado ? 'Pagado' : 'Pendiente de pago';
       statusElem.className = pagado ? 'qr-status pagado' : 'qr-status debe';
       
-      // Generar un QR único basado en el nombre
-      generarQrSimulado(qrGrid, nombre);
+      // Crear datos para el QR
+      const qrData = {
+        nombre: nombre,
+        pagado: pagado,
+        evento: "Carnes Asadas",
+        fecha: "04/06/2025",
+        generado: new Date().toISOString()
+      };
+      
+      // Convertir a JSON para el código QR
+      const qrContent = JSON.stringify(qrData);
+      
+      // Generar el código QR real
+      QRCode.toCanvas(canvas, qrContent, {
+        width: 200,
+        margin: 1,
+        color: {
+          dark: '#000000',
+          light: '#ffffff'
+        },
+        errorCorrectionLevel: 'H' // Alta corrección de errores para mayor confiabilidad
+      }, function(error) {
+        if (error) {
+          console.error('Error generando QR:', error);
+          // Mostrar un mensaje de error si falla
+          canvas.getContext('2d').fillText('Error generando código QR', 10, 50);
+        }
+      });
       
       // Mostrar modal
       modal.classList.add('active');
-    }
-    
-    // Generar QR Code simulado
-    function generarQrSimulado(gridElement, seed) {
-      // Vaciar el grid
-      gridElement.innerHTML = '';
-      
-      // Generar una secuencia pseudoaleatoria basada en el nombre
-      let hash = 0;
-      for (let i = 0; i < seed.length; i++) {
-        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-        hash |= 0;
-      }
-      
-      // Generar una matriz de 21x21 para el QR
-      for (let i = 0; i < 21 * 21; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'qr-cell';
-        
-        // Simular un patrón de QR basado en el hash del nombre
-        const rnd = Math.abs((hash * (i + 1)) % 100);
-        
-        // Evitar las esquinas (posiciones de los marcadores)
-        const x = i % 21;
-        const y = Math.floor(i / 21);
-        const isCorner = (
-          (x < 7 && y < 7) || // Esquina superior izquierda
-          (x > 13 && y < 7) || // Esquina superior derecha
-          (x < 7 && y > 13) // Esquina inferior izquierda
-        );
-        
-        if (!isCorner && rnd < 45) {
-          cell.classList.add('qr-cell-black');
-        } else if (!isCorner) {
-          cell.classList.add('qr-cell-white');
-        }
-        
-        gridElement.appendChild(cell);
-      }
     }
     
     // Cerrar modal de QR
@@ -1685,6 +2070,152 @@
     document.getElementById('qrModal').addEventListener('click', function(e) {
       if (e.target === this) {
         this.classList.remove('active');
+      }
+    });
+    
+    // Sistema de escaneo QR con contraseña
+    document.addEventListener('DOMContentLoaded', function() {
+      const scanButton = document.getElementById('scanButton');
+      const passwordModal = document.getElementById('passwordModal');
+      const scannerModal = document.getElementById('scannerModal');
+      const cancelPassword = document.getElementById('cancelPassword');
+      const verifyPassword = document.getElementById('verifyPassword');
+      const closeScanner = document.getElementById('closeScanner');
+      const scanPassword = document.getElementById('scanPassword');
+      const scanResult = document.getElementById('scanResult');
+      
+      // La contraseña es "admin123" (en un sistema real, esto sería verificado en el servidor)
+      const CORRECT_PASSWORD = "admin123";
+      
+      // Configuración de escáner
+      let html5QrCodeScanner = null;
+      
+      // Abrir modal de contraseña
+      scanButton.addEventListener('click', function() {
+        passwordModal.classList.add('active');
+        scanPassword.value = '';
+        scanPassword.focus();
+      });
+      
+      // Cerrar modal de contraseña
+      cancelPassword.addEventListener('click', function() {
+        passwordModal.classList.remove('active');
+      });
+      
+      // Verificar contraseña
+      verifyPassword.addEventListener('click', function() {
+        if (scanPassword.value === CORRECT_PASSWORD) {
+          passwordModal.classList.remove('active');
+          iniciarEscaner();
+        } else {
+          alert('Contraseña incorrecta');
+          scanPassword.value = '';
+          scanPassword.focus();
+        }
+      });
+      
+      // También permitir enviar con Enter
+      scanPassword.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+          verifyPassword.click();
+        }
+      });
+      
+      // Cerrar escáner
+      closeScanner.addEventListener('click', function() {
+        detenerEscaner();
+        scannerModal.classList.remove('active');
+      });
+      
+      // Iniciar el escáner de QR
+      function iniciarEscaner() {
+        scannerModal.classList.add('active');
+        scanResult.classList.remove('active');
+        
+        // Crear instancia del escáner si no existe
+        if (!html5QrCodeScanner) {
+          html5QrCodeScanner = new Html5QrcodeScanner(
+            "qrReader", 
+            { 
+              fps: 10, 
+              qrbox: 250,
+              aspectRatio: 1.0,
+              showTorchButtonIfSupported: true
+            }
+          );
+        }
+        
+        html5QrCodeScanner.render(onScanSuccess);
+      }
+      
+      // Detener el escáner
+      function detenerEscaner() {
+        if (html5QrCodeScanner) {
+          try {
+            html5QrCodeScanner.clear();
+          } catch (error) {
+            console.error("Error al detener el escáner:", error);
+          }
+        }
+      }
+      
+      // Procesar resultado del escaneo
+      function onScanSuccess(decodedText) {
+        // Detener el escáner después de escanear con éxito
+        detenerEscaner();
+        
+        try {
+          // Intentar analizar el JSON del código QR
+          const qrData = JSON.parse(decodedText);
+          
+          // Validar que el código tenga la estructura esperada
+          if (qrData.nombre && qrData.evento === "Carnes Asadas") {
+            // Buscar a la persona en nuestros datos
+            const personaEncontrada = personas.find(p => p.nombre === qrData.nombre);
+            
+            // Mostrar resultado
+            document.getElementById('resultName').textContent = qrData.nombre;
+            document.getElementById('resultStatus').textContent = qrData.pagado ? 'Pagado' : 'Pendiente de pago';
+            document.getElementById('resultStatus').className = qrData.pagado ? 'text-success' : 'text-danger';
+            
+            // Formatear fecha
+            const fechaGeneracion = new Date(qrData.generado);
+            document.getElementById('resultDate').textContent = fechaGeneracion.toLocaleString();
+            
+            // Validar autenticidad
+            const validationDiv = document.querySelector('.result-validation');
+            
+            if (personaEncontrada) {
+              // Comprobar si el estado de pago coincide con nuestros registros
+              if (personaEncontrada.pagado === qrData.pagado) {
+                validationDiv.innerHTML = '<div class="result-valid"><i class="fas fa-check-circle me-2"></i>QR válido y autenticado</div>';
+                // Reproducir sonido de éxito
+                const successSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3');
+                successSound.volume = 0.5;
+                successSound.play();
+              } else {
+                validationDiv.innerHTML = '<div class="result-invalid"><i class="fas fa-exclamation-triangle me-2"></i>QR con estado de pago incorrecto</div>';
+                // Reproducir sonido de error
+                const errorSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-electricity-buzz-955.mp3');
+                errorSound.volume = 0.3;
+                errorSound.play();
+              }
+            } else {
+              validationDiv.innerHTML = '<div class="result-invalid"><i class="fas fa-exclamation-triangle me-2"></i>Persona no encontrada en el registro</div>';
+              // Reproducir sonido de error
+              const errorSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-electricity-buzz-955.mp3');
+              errorSound.volume = 0.3;
+              errorSound.play();
+            }
+            
+            scanResult.classList.add('active');
+          } else {
+            alert('QR inválido: El código no contiene la información esperada');
+          }
+        } catch (error) {
+          console.error("Error al procesar el QR:", error);
+          alert('El QR escaneado no es válido o está dañado');
+        }
       }
     });
   </script>
