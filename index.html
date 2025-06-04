@@ -65,6 +65,13 @@
     <p class="resumen"><strong>Total Recaudado:</strong> $<span id="recaudado">0</span></p>
     <p class="resumen"><strong>Faltante:</strong> $<span id="faltante">0</span></p>
 
+    <div class="text-center mt-4">
+      <button onclick="generarFichaOxxo()" class="btn btn-danger">
+        Generar ficha de pago OXXO
+      </button>
+    </div>
+
+    
     <div class="mt-4">
       <label class="fw-bold text-dark mb-2">Datos bancarios para transferir la cooperación:</label>
       <div class="p-4 rounded-4" style="background: linear-gradient(135deg, #00b1d4, #0094c3); color: white; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
@@ -174,6 +181,91 @@
 
     render();
   </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  function generarReferenciaCliente() {
+    return Math.floor(100000 + Math.random() * 900000);
+  }
+
+  function generarCodigoBarras() {
+    let code = "";
+    for (let i = 0; i < 20; i++) {
+      code += Math.floor(Math.random() * 10);
+      if ((i + 1) % 4 === 0 && i !== 19) code += " ";
+    }
+    return code;
+  }
+
+  function generarFechaVencimiento() {
+    const hoy = new Date();
+    hoy.setDate(hoy.getDate() + 3); // 3 días después
+    return hoy.toLocaleDateString("es-MX");
+  }
+
+  function generarFichaOxxo() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const referenciaCliente = generarReferenciaCliente();
+    const codigoBarras = generarCodigoBarras();
+    const fechaVencimiento = generarFechaVencimiento();
+    const monto = "$300.00 MXN";
+
+    // Título
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text(`Pagar ${monto} por su compra con referencia ${referenciaCliente}.`, 20, 20);
+
+    // Código de barras simulado
+    let x = 20;
+    const y = 30;
+    for (let i = 0; i < 100; i++) {
+      const altura = 20;
+      const ancho = Math.random() > 0.7 ? 1.2 : 0.8;
+      if (Math.random() > 0.5) {
+        doc.setFillColor(0);
+        doc.rect(x, y, ancho, altura, "F");
+      }
+      x += ancho + 0.3;
+    }
+
+    // Código de barras debajo (como texto)
+    doc.setFont("courier", "bold");
+    doc.setFontSize(12);
+    doc.text(codigoBarras, 20, 55);
+
+    // Datos informativos
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(`Referencia cliente: ${referenciaCliente}`, 20, 70);
+    doc.text("Ubicación: En OXXO", 20, 78);
+    doc.text(`Vencimiento: ${fechaVencimiento}`, 20, 86);
+    doc.text(`Monto a pagar: ${monto}`, 20, 94);
+
+    // Instrucciones
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("$ Puede pagar en OXXO de las siguientes formas:", 20, 110);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    const instrucciones = [
+      "1. Diríjase a una tienda OXXO y dicte este número al cajero.",
+      "2. Enseñe el código de barras desde tu celular para que lo escanee.",
+      "3. También puedes imprimir esta ficha y llevarla contigo.",
+    ];
+    let yInst = 118;
+    instrucciones.forEach(inst => {
+      doc.text(inst, 22, yInst);
+      yInst += 8;
+    });
+
+    // Descargar el archivo
+    doc.save("ficha_pago_oxxo.pdf");
+  }
+</script>
+
 
 </body>
 </html>
