@@ -23,7 +23,6 @@
     .persona {
       padding: 10px 0;
       border-bottom: 1px solid #eee;
-      cursor: pointer;
     }
     .pagado {
       color: green;
@@ -132,10 +131,6 @@
         } else {
           const row = document.createElement("div");
           row.className = "row persona";
-          row.onclick = () => {
-            p.pagado = !p.pagado;
-            render();
-          };
 
           const colNombre = document.createElement("div");
           colNombre.className = "col-6";
