@@ -5,35 +5,996 @@
   <title>Carnes Asadas - Cooperación</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+    
     body {
-      background-color: #f8f9fa;
-      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      color: #333;
     }
+    
     h1, h2 {
       color: #9b2347;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
     }
-    .evento-info, .equipo {
-      background: #fff;
-      border-left: 5px solid #9b2347;
-      padding: 20px;
+    
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h1:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #9b2347, #ff6b6b);
+      border-radius: 2px;
+    }
+    
+    .evento-info {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transform: translateY(0);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .evento-info:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .equipo {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
       margin-bottom: 25px;
-      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
+    
+    .equipo:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .equipo h2 {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #9b2347, #ff6b6b);
+      color: white;
+      font-size: 1.4rem;
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .equipo h2:before {
+      content: '\f5e7';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .equipo-body {
+      padding: 5px 15px;
+    }
+    
     .persona {
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
     }
+    
+    .persona:hover {
+      transform: translateX(5px);
+      background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .persona-nombre {
+      flex: 1;
+      font-weight: 500;
+      padding-right: 10px;
+      word-break: break-word;
+    }
+    
+    .persona-estado {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 100px;
+    }
+    
     .pagado {
-      color: green;
-      font-weight: bold;
+      background: linear-gradient(135deg, #26c9a0, #2ecc71);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
     }
+    
     .debe {
-      color: red;
+      background: linear-gradient(135deg, #ff6b6b, #ee5253);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(238, 82, 83, 0.3);
+    }
+    
+    .pagado i, .debe i {
+      margin-right: 5px;
+    }
+    
+    .resumen {
+      font-size: 1.2rem;
+      padding: 10px 15px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      color: #333;
+      margin: 15px 0;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-tarjeta {
+      perspective: 1000px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    .tarjeta {
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+    
+    .card-tarjeta:hover .tarjeta {
+      transform: rotateY(5deg);
+    }
+    
+    .btn-oxxo {
+      background: linear-gradient(135deg, #e52d27, #b31217);
+      border: none;
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(229, 45, 39, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-oxxo:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(229, 45, 39, 0.4);
+      background: linear-gradient(135deg, #b31217, #e52d27);
+    }
+    
+    /* Innovaciones - Tema Oscuro */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+    }
+    
+    .dark-mode {
+      background: linear-gradient(135deg, #111, #333);
+      color: #eee;
+    }
+    
+    .dark-mode .evento-info,
+    .dark-mode .equipo {
+      background: rgba(40, 40, 40, 0.8);
+      border-color: #444;
+      color: #eee;
+    }
+    
+    .dark-mode .persona {
+      background: rgba(50, 50, 50, 0.7);
+    }
+    
+    .dark-mode h1, .dark-mode h2 {
+      color: #ff6b6b;
+    }
+    
+    /* Modal de Tarjeta de Crédito Falsa */
+    .credit-card-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .credit-card-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .credit-card-container {
+      background: white;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .credit-card-modal.active .credit-card-container {
+      transform: translateY(0);
+    }
+    
+    .credit-card-form {
+      position: relative;
+    }
+    
+    .credit-card-error {
+      display: none;
+      background: #ffe0e0;
+      border: 2px dashed #ff6b6b;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      color: #d63031;
+      font-weight: bold;
+      transform: rotate(-2deg);
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .credit-card-error.show {
+      display: block;
+      animation: wobble 0.8s ease;
+    }
+    
+    .maintenance-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #d63031;
+    }
+    
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-2deg); }
+      25% { transform: rotate(3deg); }
+      50% { transform: rotate(-3deg); }
+      75% { transform: rotate(2deg); }
+    }
+    
+    .credit-card-input {
+      margin-bottom: 15px;
+    }
+    
+    .card-wrapper {
+      perspective: 1000px;
+      margin-bottom: 30px;
+    }
+    
+    .credit-card {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #2193b0, #6dd5ed);
+      border-radius: 15px;
+      padding: 20px;
+      color: white;
+      box-shadow: 0 10px 20px rgba(33, 147, 176, 0.3);
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      position: relative;
+    }
+    
+    .credit-card-chip {
+      width: 50px;
+      height: 40px;
+      background: linear-gradient(135deg, #ffdf89, #c39738);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .credit-card-number {
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      font-family: monospace;
+    }
+    
+    .credit-card-name {
+      font-size: 1rem;
+      text-transform: uppercase;
       font-weight: bold;
     }
-    .resumen {
-      font-size: 1.2em;
+    
+    .credit-card-logo {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      font-size: 2rem;
+    }
+    
+    .btn-credit-card {
+      background: linear-gradient(135deg, #2193b0, #6dd5ed);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-credit-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(33, 147, 176, 0.4);
+    }
+    
+    /* Efecto WOW - Fuego Realista */
+    .fire-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 180px;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      transform: translateY(70%);
+      transition: transform 0.5s ease;
+    }
+    
+    body:hover .fire-container {
+      transform: translateY(60%);
+    }
+    
+    .fire-layer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      mix-blend-mode: screen;
+    }
+    
+    .fire-layer-1 {
+      background-image: url('https://assets.codepen.io/2621168/fire1.png');
+      animation: burn1 4s infinite alternate;
+      opacity: 0.6;
+    }
+    
+    .fire-layer-2 {
+      background-image: url('https://assets.codepen.io/2621168/fire2.png');
+      animation: burn2 5s infinite alternate;
+      opacity: 0.7;
+    }
+    
+    .fire-layer-3 {
+      background-image: url('https://assets.codepen.io/2621168/fire3.png');
+      animation: burn3 3s infinite alternate;
+      opacity: 0.8;
+    }
+    
+    @keyframes burn1 {
+      0% { transform: scale(1) translateX(-10px); }
+      100% { transform: scale(1.1) translateX(10px); }
+    }
+    
+    @keyframes burn2 {
+      0% { transform: scale(1.1) translateX(10px); }
+      100% { transform: scale(1) translateX(-10px); }
+    }
+    
+    @keyframes burn3 {
+      0% { transform: scale(1.05) translateX(-5px); }
+      100% { transform: scale(1.15) translateX(5px); }
+    }
+    
+    /* Efecto WOW - Parallax 3D */
+    .parallax-container {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      position: relative;
+    }
+    
+    .parallax-layer {
+      transition: transform 0.2s ease-out;
+      position: relative;
+    }
+    
+    /* Efecto WOW - Modal de Celebración */
+    .celebration-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    
+    .celebration-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .celebration-content {
+      max-width: 600px;
+      width: 90%;
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(255, 126, 95, 0.5), 0 0 100px rgba(254, 180, 123, 0.3);
+      text-align: center;
+      transform: scale(0.8);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .celebration-modal.active .celebration-content {
+      transform: scale(1);
+    }
+    
+    .celebration-title {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .celebration-text {
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 30px;
+    }
+    
+    .celebration-btn {
+      background: white;
+      color: #ff7e5f;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .celebration-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .celebration-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.4), rgba(255,255,255,0));
+      transform: skewX(-25deg);
+      z-index: -1;
+      transition: all 0.75s ease;
+    }
+    
+    .celebration-btn:hover:before {
+      width: 200%;
+      left: -50%;
+    }
+    
+    /* Efecto WOW - Animación de Comida */
+    .food-animation {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      font-size: 50px;
+      z-index: 9990;
+      pointer-events: none;
+      animation: food-fall 3s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    @keyframes food-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Efecto WOW - Reproductor de música */
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #9b2347, #ff6b6b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .music-player:hover {
+      transform: scale(1.1);
+    }
+    
+    .music-player i {
+      color: white;
+      font-size: 1.5rem;
+    }
+    
+    /* Animación de Fondo */
+    .bbq-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+    
+    /* Innovación - Barra de Progreso */
+    .progress-container {
+      width: 100%;
+      background-color: rgba(200, 200, 200, 0.3);
+      border-radius: 10px;
+      margin: 20px 0;
+      height: 15px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress-bar {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #ff6b6b, #9b2347);
+      transition: width 1s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%
+      );
+      background-size: 20px 20px;
+      animation: move-stripes 2s linear infinite;
+    }
+    
+    @keyframes move-stripes {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
+    }
+    
+    /* Innovación - Efecto 3D avanzado para tarjetas */
+    .equipo {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    
+    .equipo:hover h2 {
+      transform: translateZ(20px);
+    }
+    
+    .equipo-body {
+      transform: translateZ(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .equipo:hover .equipo-body {
+      transform: translateZ(10px);
+    }
+    
+    /* Efecto de confeti para pagos */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      border-radius: 0;
+      animation: fall linear forwards;
+    }
+    
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(calc(100vh + 100px)) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Innovación - Tooltip personalizado */
+    .tooltip-custom {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .tooltip-custom:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      z-index: 10;
+      animation: fade-in 0.3s ease;
+    }
+    
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    
+    @media (max-width: 576px) {
+      body {
+        padding: 10px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .evento-info, .equipo {
+        padding: 15px;
+      }
+      
+      .equipo h2 {
+        font-size: 1.2rem;
+        padding: 15px;
+      }
+      
+      .persona {
+        padding: 12px 10px;
+      }
+      
+      /* Ajustes responsivos para innovaciones */
+      .theme-toggle {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        right: 10px;
+      }
+      
+      /* Mejoras de responsividad para el modal de tarjeta */
+      .credit-card-container {
+        padding: 15px;
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      
+      .credit-card {
+        height: 160px;
+      }
+      
+      .credit-card-number {
+        font-size: 1.1rem;
+      }
+      
+      .credit-card-chip {
+        width: 40px;
+        height: 30px;
+      }
+      
+      .credit-card-error {
+        transform: none;
+        padding: 15px;
+      }
+      
+      .credit-card-error.show {
+        animation: wobble-mobile 0.8s ease;
+      }
+      
+      .maintenance-icon {
+        font-size: 2rem;
+      }
+      
+      .credit-card-error p {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+      
+      .btn-credit-card, .btn-secondary {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+      }
+      
+      @keyframes wobble-mobile {
+        0%, 100% { transform: rotate(-1deg); }
+        25% { transform: rotate(1deg); }
+        50% { transform: rotate(-1deg); }
+        75% { transform: rotate(1deg); }
+      }
+    }
+    
+    /* Para teléfonos muy pequeños */
+    @media (max-width: 360px) {
+      .credit-card-container {
+        padding: 10px;
+      }
+      
+      .d-flex.justify-content-between.mt-4 {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .btn-secondary, .btn-credit-card {
+        width: 100%;
+      }
+      
+      .credit-card {
+        height: 140px;
+      }
+      
+      .credit-card-number {
+        font-size: 1rem;
+        letter-spacing: 2px;
+      }
+      
+      h3.mb-4 {
+        font-size: 1.3rem;
+        margin-bottom: 10px !important;
+      }
+    }
+    
+    /* Estilos para QR Codes */
+    .qr-button {
+      background: none;
+      border: none;
+      color: #9b2347;
+      padding: 0;
+      margin-left: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1.1rem;
+    }
+    
+    .qr-button:hover {
+      transform: scale(1.2);
+      color: #ff6b6b;
+    }
+    
+    .qr-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .qr-modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .qr-container {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      max-width: 350px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(30px) scale(0.9);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .qr-modal.active .qr-container {
+      transform: translateY(0) scale(1);
+    }
+    
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      margin: 15px auto;
+      background: white;
+      position: relative;
+      border: 10px solid white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .qr-grid {
+      display: grid;
+      grid-template-columns: repeat(21, 1fr);
+      grid-template-rows: repeat(21, 1fr);
+      width: 100%;
+      height: 100%;
+    }
+    
+    .qr-cell {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .qr-cell-black {
+      background-color: black;
+    }
+    
+    .qr-cell-white {
+      background-color: white;
+    }
+    
+    .qr-corner {
+      position: absolute;
+      width: 30%;
+      height: 30%;
+      background: black;
+      border: 6px solid white;
+    }
+    
+    .qr-corner-tl {
+      top: 5%;
+      left: 5%;
+      border-radius: 2px;
+    }
+    
+    .qr-corner-tr {
+      top: 5%;
+      right: 5%;
+      border-radius: 2px;
+    }
+    
+    .qr-corner-bl {
+      bottom: 5%;
+      left: 5%;
+      border-radius: 2px;
+    }
+    
+    .qr-name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #9b2347;
+    }
+    
+    .qr-status {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .qr-status.pagado {
+      background: #2ecc71;
+      color: white;
+    }
+    
+    .qr-status.debe {
+      background: #ff6b6b;
+      color: white;
+    }
+    
+    .qr-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .qr-close:hover {
+      color: #333;
+    }
+    
+    .qr-info {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #666;
     }
   </style>
 </head>
@@ -62,12 +1023,23 @@
     <p><strong>Hora de llegada:</strong> De 12 a 2 PM</p>
     <p><strong>Día:</strong> 04 de junio de 2025</p>
     <p><strong>Cooperación:</strong> $300 por persona</p>
-    <p class="resumen"><strong>Total Recaudado:</strong> $<span id="recaudado">0</span></p>
-    <p class="resumen"><strong>Faltante:</strong> $<span id="faltante">0</span></p>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="resumen"><i class="fas fa-coins me-2"></i><strong>Total Recaudado:</strong> $<span id="recaudado">0</span></p>
+      </div>
+      <div class="col-md-6">
+        <p class="resumen"><i class="fas fa-hand-holding-usd me-2"></i><strong>Faltante:</strong> $<span id="faltante">0</span></p>
+      </div>
+    </div>
 
     <div class="text-center mt-4">
-      <button onclick="generarFichaOxxo()" class="btn btn-danger">
-        Generar ficha de pago OXXO
+      <button onclick="generarFichaOxxo()" class="btn btn-oxxo me-2">
+        <i class="fas fa-barcode me-2"></i> Generar ficha de pago OXXO
+      </button>
+        </br>
+        </br>
+      <button id="openCreditCard" class="btn btn-primary">
+        <i class="far fa-credit-card me-2"></i> Pagar con Tarjeta
       </button>
     </div>
 
@@ -108,7 +1080,7 @@
       { nombre: "Iván Cordova Álvarez", pagado: false },
       { nombre: "Cesar Arturo Martínez García", pagado: false },
       { nombre: "Ricardo González Ramos", pagado: true },
-      { nombre: "Emmanuel Urbano Santos Cano", pagado: true },
+      { nombre: "Emmanuel Urbano Santos Cano", pagado: false },
       { nombre: "Valery Abril Velázquez del Rivero", pagado: false },
 
       { grupo: "Olmeck" },
@@ -130,14 +1102,6 @@
       { nombre: "Danylleimi García López", pagado: true },
       { nombre: "Henry Mauricio López Cadena", pagado: true },
       { nombre: "Yeritza Fernanda Ramón Potenciano", pagado: true },
-
-      { grupo: "Vortex" },
-      { nombre: "José Aminadat Morato Márquez", pagado: true },
-      { nombre: "Emmanuel López Torres", pagado: true },
-      { nombre: "Romina Lara Ortiz", pagado: true },
-      { nombre: "Alba Maxin Cervantes González", pagado: true },
-      { nombre: "Brenda Alicia Pérez Hernández", pagado: true },
-      { nombre: "Pedro Isaí Jiménez Córdova", pagado: true },
     ];
 
     const contenedor = document.getElementById("contenedor-personas");
@@ -158,21 +1122,41 @@
           h2.textContent = "Equipo " + p.grupo;
           grupoActual.appendChild(h2);
           divGrupo = document.createElement("div");
+          divGrupo.className = "equipo-body";
           grupoActual.appendChild(divGrupo);
           contenedor.appendChild(grupoActual);
         } else {
           const row = document.createElement("div");
-          row.className = "row persona";
+          row.className = "persona";
 
           const colNombre = document.createElement("div");
-          colNombre.className = "col-6";
+          colNombre.className = "persona-nombre";
           colNombre.textContent = p.nombre;
+          
+          // Agregar botón QR
+          const qrButton = document.createElement("button");
+          qrButton.className = "qr-button";
+          qrButton.innerHTML = '<i class="fas fa-qrcode"></i>';
+          qrButton.setAttribute("title", "Ver código QR de acceso");
+          qrButton.onclick = function(e) {
+            e.stopPropagation(); // Evitar activar el click en persona
+            mostrarQR(p.nombre, p.pagado);
+          };
+          colNombre.appendChild(qrButton);
 
           const colEstado = document.createElement("div");
-          colEstado.className = "col-6 text-end";
+          colEstado.className = "persona-estado";
+          
           const span = document.createElement("span");
           span.className = p.pagado ? "pagado" : "debe";
-          span.textContent = p.pagado ? "Pagado" : "Debe";
+          
+          const icon = document.createElement("i");
+          icon.className = p.pagado ? "fas fa-check-circle" : "fas fa-times-circle";
+          span.appendChild(icon);
+          
+          const texto = document.createTextNode(p.pagado ? " Pagado" : " Debe");
+          span.appendChild(texto);
+          
           colEstado.appendChild(span);
 
           row.appendChild(colNombre);
@@ -273,5 +1257,405 @@
   </script>
 
 
+  <!-- Innovaciones - Componentes adicionales -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon" id="themeIcon"></i>
+  </div>
+  
+  <div class="confetti-container" id="confettiContainer"></div>
+  
+  <div class="bbq-background" id="bbqBackground"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.9.3/tsparticles.confetti.bundle.min.js"></script>
+  <script>
+    // Modo oscuro
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      
+      if (isDarkMode) {
+        themeIcon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeIcon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+    
+    themeToggle.addEventListener('click', toggleDarkMode);
+    
+    // Verificar preferencia guardada
+    if (localStorage.getItem('theme') === 'dark') {
+      toggleDarkMode();
+    }
+    
+    // Animación de fondo
+    const bbqBackground = document.getElementById('bbqBackground');
+    const bbqItems = ['🍖', '🥩', '🔥', '🍗', '🥓', '🌭', '🍔'];
+    
+    function createBBQIcon() {
+      const icon = document.createElement('div');
+      const randomIcon = bbqItems[Math.floor(Math.random() * bbqItems.length)];
+      
+      icon.textContent = randomIcon;
+      icon.style.position = 'absolute';
+      icon.style.fontSize = Math.random() * 20 + 20 + 'px';
+      icon.style.left = Math.random() * 100 + 'vw';
+      icon.style.top = Math.random() * 100 + 'vh';
+      icon.style.opacity = '0.2';
+      icon.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+      
+      bbqBackground.appendChild(icon);
+      
+      setTimeout(() => {
+        icon.remove();
+      }, 20000);
+    }
+    
+    // Crear iconos de BBQ cada cierto tiempo
+    setInterval(createBBQIcon, 2000);
+    for (let i = 0; i < 10; i++) createBBQIcon();
+    
+    // Agregar barra de progreso al iniciar
+    function agregarBarraProgreso() {
+      const totalPersonas = personas.filter(p => p.nombre).length;
+      const personasPagadas = personas.filter(p => p.nombre && p.pagado).length;
+      const porcentaje = (personasPagadas / totalPersonas) * 100;
+      
+      const progressContainer = document.createElement('div');
+      progressContainer.className = 'progress-container';
+      
+      const progressBar = document.createElement('div');
+      progressBar.className = 'progress-bar';
+      progressBar.style.width = porcentaje + '%';
+      
+      progressContainer.appendChild(progressBar);
+      
+      const infoElement = document.querySelector('.evento-info');
+      infoElement.appendChild(progressContainer);
+      
+      const progressText = document.createElement('p');
+      progressText.className = 'text-center';
+      progressText.innerHTML = `<b>${personasPagadas} de ${totalPersonas}</b> personas han pagado (${porcentaje.toFixed(1)}%)`;
+      infoElement.appendChild(progressText);
+    }
+    
+    // Modificar el render para incluir características adicionales
+    const originalRender = render;
+    render = function() {
+      originalRender();
+      agregarBarraProgreso();
+      
+      // Agregar tooltips a los elementos
+      document.querySelectorAll('.persona-nombre').forEach(elemento => {
+        elemento.classList.add('tooltip-custom');
+        elemento.setAttribute('data-tooltip', 'Click para ver detalles');
+      });
+      
+      // Hacer los elementos de persona interactivos
+      document.querySelectorAll('.persona').forEach(persona => {
+        persona.style.cursor = 'pointer';
+        persona.addEventListener('click', function() {
+          this.classList.toggle('selected');
+          if (this.classList.contains('selected')) {
+            this.style.transform = 'scale(1.02) translateX(5px)';
+            this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
+          } else {
+            this.style.transform = '';
+            this.style.boxShadow = '';
+          }
+        });
+      });
+    }
+    
+    // Efecto de confeti cuando se marca como pagado
+    function lanzarConfeti() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+    
+    // Agregar botón para simular pago
+    function agregarBotonSimularPago() {
+      const personasDeudoras = document.querySelectorAll('.debe');
+      personasDeudoras.forEach(deudor => {
+        const parent = deudor.closest('.persona');
+        parent.addEventListener('dblclick', function() {
+          // Simular que esta persona pagó
+          lanzarConfeti();
+          
+          // Cambiar visualmente (solo para demostración)
+          setTimeout(() => {
+            const span = this.querySelector('span');
+            span.className = 'pagado';
+            span.innerHTML = '<i class="fas fa-check-circle"></i> Pagado';
+            
+            // Actualizar contadores (simulación)
+            const recaudadoElem = document.getElementById('recaudado');
+            recaudadoElem.textContent = parseInt(recaudadoElem.textContent) + 300;
+            
+            const faltanteElem = document.getElementById('faltante');
+            faltanteElem.textContent = parseInt(faltanteElem.textContent) - 300;
+            
+            // Actualizar barra de progreso
+            const progressBar = document.querySelector('.progress-bar');
+            const progressText = document.querySelector('.progress-container + p');
+            
+            if (progressBar && progressText) {
+              const totalPersonas = personas.filter(p => p.nombre).length;
+              const currentPagados = parseInt(recaudadoElem.textContent) / 300;
+              const porcentaje = (currentPagados / totalPersonas) * 100;
+              
+              progressBar.style.width = porcentaje + '%';
+              progressText.innerHTML = `<b>${currentPagados} de ${totalPersonas}</b> personas han pagado (${porcentaje.toFixed(1)}%)`;
+            }
+          }, 500);
+        });
+      });
+    }
+    
+    // Ejecutar después del render
+    setTimeout(() => {
+      agregarBotonSimularPago();
+    }, 1000);
+    
+    // Agregar estilos para keyframes
+    (function() {
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes float {
+          0% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-30vh) rotate(180deg); }
+          100% { transform: translateY(-60vh) rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    })();
+    
+    // Esperar a que el DOM esté completamente cargado antes de inicializar el modal
+    document.addEventListener('DOMContentLoaded', function() {
+      // Funcionalidad del modal de tarjeta de crédito falsa
+      const openCreditCard = document.getElementById('openCreditCard');
+      const creditCardModal = document.getElementById('creditCardModal');
+      const closeCardModal = document.getElementById('closeCardModal');
+      const processPayment = document.getElementById('processPayment');
+      const cardError = document.getElementById('cardError');
+      
+      if (openCreditCard) {
+        openCreditCard.addEventListener('click', () => {
+          if (creditCardModal) {
+            creditCardModal.classList.add('active');
+          }
+        });
+      }
+      
+      if (closeCardModal) {
+        closeCardModal.addEventListener('click', () => {
+          if (creditCardModal && cardError) {
+            creditCardModal.classList.remove('active');
+            setTimeout(() => {
+              cardError.classList.remove('show');
+            }, 300);
+          }
+        });
+      }
+      
+      if (processPayment && cardError) {
+        processPayment.addEventListener('click', () => {
+          // Mostrar mensaje de error de mantenimiento con efecto de wobble
+          cardError.classList.add('show');
+          
+          // Sonido de error (opcional)
+          const errorSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wrong-electricity-buzz-955.mp3');
+          errorSound.volume = 0.5;
+          errorSound.play();
+        });
+      }
+      
+      // Simular números de tarjeta al escribir
+      const creditCardInputs = document.querySelectorAll('.credit-card-form input');
+      const creditCardNumber = document.querySelector('.credit-card-number');
+      const creditCardName = document.querySelector('.credit-card-name');
+      
+      if (creditCardInputs.length > 0 && creditCardNumber && creditCardName) {
+        creditCardInputs[0].addEventListener('input', (e) => {
+          let value = e.target.value.replace(/\s/g, '');
+          // Agregar espacios cada 4 caracteres
+          value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+          e.target.value = value;
+          
+          // Actualizar la tarjeta
+          if (value.length > 0) {
+            creditCardNumber.textContent = value;
+          } else {
+            creditCardNumber.textContent = '•••• •••• •••• ••••';
+          }
+        });
+        
+        creditCardInputs[3].addEventListener('input', (e) => {
+          if (e.target.value.length > 0) {
+            creditCardName.textContent = e.target.value.toUpperCase();
+          } else {
+            creditCardName.textContent = 'NOMBRE DEL TITULAR';
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- Modal de Tarjeta de Crédito -->
+  <div class="credit-card-modal" id="creditCardModal">
+    <div class="credit-card-container">
+      <h3 class="mb-4">Pagar con Tarjeta de Crédito</h3>
+      
+      <div class="card-wrapper">
+        <div class="credit-card">
+          <div class="credit-card-chip"></div>
+          <div class="credit-card-number">•••• •••• •••• ••••</div>
+          <div class="credit-card-name">NOMBRE DEL TITULAR</div>
+          <div class="credit-card-logo">
+            <i class="fab fa-cc-visa"></i>
+          </div>
+        </div>
+      </div>
+      
+      <form class="credit-card-form">
+        <div class="credit-card-input">
+          <label class="form-label">Número de Tarjeta</label>
+          <input type="text" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19">
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6 credit-card-input">
+            <label class="form-label">Fecha de Expiración</label>
+            <input type="text" class="form-control" placeholder="MM/AA">
+          </div>
+          <div class="col-md-6 credit-card-input">
+            <label class="form-label">Código CVC</label>
+            <input type="text" class="form-control" placeholder="123" maxlength="3">
+          </div>
+        </div>
+        
+        <div class="credit-card-input">
+          <label class="form-label">Nombre del Titular</label>
+          <input type="text" class="form-control" placeholder="Como aparece en la tarjeta">
+        </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+          <button type="button" class="btn btn-secondary" id="closeCardModal">Cancelar</button>
+          <button type="button" class="btn btn-credit-card" id="processPayment">Procesar Pago $300</button>
+        </div>
+        
+        <div class="credit-card-error" id="cardError">
+          <div class="maintenance-icon"><i class="fas fa-tools"></i></div>
+          <p>¡Lo sentimos! El sistema de pago con tarjeta se encuentra en mantenimiento.</p>
+          <p class="mb-0">Por favor, paga en OXXO o transferencia bancaria... ¡o pídele prestado a un amigo pinche pobre! 😂</p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Componentes WOW -->
+  <div class="fire-container">
+    <div class="fire-layer fire-layer-1"></div>
+    <div class="fire-layer fire-layer-2"></div>
+    <div class="fire-layer fire-layer-3"></div>
+  </div>
+  
+  <!-- Modal de QR Code -->
+  <div class="qr-modal" id="qrModal">
+    <div class="qr-container">
+      <button class="qr-close" id="qrClose"><i class="fas fa-times"></i></button>
+      <div class="qr-name" id="qrName">Nombre de la Persona</div>
+      <div class="qr-status" id="qrStatus">Estado</div>
+      <div class="qr-code">
+        <div class="qr-grid" id="qrGrid"></div>
+        <div class="qr-corner qr-corner-tl"></div>
+        <div class="qr-corner qr-corner-tr"></div>
+        <div class="qr-corner qr-corner-bl"></div>
+      </div>
+      <div class="qr-info">
+        <p>Muestra este código en la entrada del evento</p>
+        <p class="small text-muted">Código válido hasta el 04/06/2025</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Función para mostrar el QR Code simulado
+    function mostrarQR(nombre, pagado) {
+      const modal = document.getElementById('qrModal');
+      const nombreElem = document.getElementById('qrName');
+      const statusElem = document.getElementById('qrStatus');
+      const qrGrid = document.getElementById('qrGrid');
+      
+      // Establecer nombre y estado
+      nombreElem.textContent = nombre;
+      statusElem.textContent = pagado ? 'Pagado' : 'Pendiente de pago';
+      statusElem.className = pagado ? 'qr-status pagado' : 'qr-status debe';
+      
+      // Generar un QR único basado en el nombre
+      generarQrSimulado(qrGrid, nombre);
+      
+      // Mostrar modal
+      modal.classList.add('active');
+    }
+    
+    // Generar QR Code simulado
+    function generarQrSimulado(gridElement, seed) {
+      // Vaciar el grid
+      gridElement.innerHTML = '';
+      
+      // Generar una secuencia pseudoaleatoria basada en el nombre
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+        hash |= 0;
+      }
+      
+      // Generar una matriz de 21x21 para el QR
+      for (let i = 0; i < 21 * 21; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'qr-cell';
+        
+        // Simular un patrón de QR basado en el hash del nombre
+        const rnd = Math.abs((hash * (i + 1)) % 100);
+        
+        // Evitar las esquinas (posiciones de los marcadores)
+        const x = i % 21;
+        const y = Math.floor(i / 21);
+        const isCorner = (
+          (x < 7 && y < 7) || // Esquina superior izquierda
+          (x > 13 && y < 7) || // Esquina superior derecha
+          (x < 7 && y > 13) // Esquina inferior izquierda
+        );
+        
+        if (!isCorner && rnd < 45) {
+          cell.classList.add('qr-cell-black');
+        } else if (!isCorner) {
+          cell.classList.add('qr-cell-white');
+        }
+        
+        gridElement.appendChild(cell);
+      }
+    }
+    
+    // Cerrar modal de QR
+    document.getElementById('qrClose').addEventListener('click', function() {
+      document.getElementById('qrModal').classList.remove('active');
+    });
+    
+    // También cerrar al hacer clic fuera del contenido
+    document.getElementById('qrModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
